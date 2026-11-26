@@ -19,6 +19,29 @@ const modal = document.getElementById("helpModal");
 const helpBtn = document.getElementById("helpBtn");
 const closeBtn = document.getElementById("closeHelp");
 
+// splits equations by comma, ignores commas inside math functions like nthRoot(x,y)
+function split(input) {
+    let result = [];
+    let curr = '';
+    let depth = 0;
+    
+    for (let i = 0; i < input.length; i++) {
+        let char = input[i];
+        if (char === '(') depth++;
+        if (char === ')') depth--;
+        
+        if (char === ',' && depth === 0) {
+            result.push(curr);
+            curr = '';
+        } else {
+            curr+=char
+        }
+    }
+    result.push(curr);
+    // clean whitespace and remove any empty entries
+    return result.map(eq => eq.trim()).filter(eq => eq !== '');
+}
+
 function sqGridHandler() {
     const minX = parseFloat(minXText.value);
     const maxX = parseFloat(maxXText.value);
@@ -36,11 +59,11 @@ function animateHandler() {
     if (squareGridBox.checked) sqGridHandler();
 
     // because math.js does not handle odd exponents correctly, change it to nthroot instead
-    const fix = equationsText.value.replace(/x\^\((\d+)\/(\d+)\)/g, (match, p, q) => {
-        return parseInt(q) % 2 !== 0 ? `nthRoot(x^${p}, ${q})`:match;
+    const fixed = document.getElementById("equation").value.replace(/((?:x|\([^)]+\)))\s*\^\s*\(\s*(\d+)\s*\/\s*(\d+)\s*\)/g, (match, base, p, q) => {
+        return parseInt(q) % 2 !== 0 ? `nthRoot((${base})^${p}, ${q})` : match;
     });
 
-    const equations = fix.split(/,(?![^(]*\))/).map(eq => eq.trim());
+    const equations = split(fixed);
 
     const gridStep = parseFloat(gridStepText.value);
     const animationTime = parseFloat(animationTimeText.value);
