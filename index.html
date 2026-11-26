@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Animator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="controls">
+        <div class="controls-header">
+            <h2>Graph Settings</h2>
+            <button id="helpBtn" title="About this project">?</button>
+            <button id="toggleControlsBtn">Hide</button>
+        </div>
+
+        <div id="controlsContent">
+            <div class="input-group">
+                <label for="equation">Equation (y = )</label>
+                <input type="text" id="equation" value="" placeholder="e.g, x^2">
+            </div>
+
+            <div class="input-group">
+                <label>Interval to animate [x1, x2]</label>
+                <div class="interval-inputs">
+                    <input type="number" id="startX" value="-10" placeholder="X1">
+                    <span>to</span>
+                    <input type="number" id="endX" value="10" placeholder="X2">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>X-axis Bounds</label>
+                <div class="interval-inputs">
+                    <input type="number" id="minX" value="-10" placeholder="Min X">
+                    <span>to</span>
+                    <input type="number" id="maxX" value="10" placeholder="Max X">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Y-axis Bounds</label>
+                <div class="interval-inputs">
+                    <input type="number" id="minY" value="-10" placeholder="Min Y">
+                    <span>to</span>
+                    <input type="number" id="maxY" value="10" placeholder="Max Y">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="gridStep">Grid Spacing (Units)</label>
+                <input type="number" id="gridStep" value="1" min="0.1" step="any">
+            </div>
+
+            <div class="input-group">
+                <label for="Animation Time"> Animation Time (sec)</label>
+                <input type="number" id="animationTime" value="1.5" min="0" step="any">
+            </div>
+
+            <div class="input-group checkbox-group">
+                <label for="drawLines">Auto square the grid?</label>
+                <input type="checkbox" id="squareGrid" checked>
+            </div>
+
+            <button id="animateBtn">Animate</button>
+        </div>
+    </div>
+
+    <div id="helpModal" class="help-modal">
+        <div class="help-content">
+            <span class="close-btn" id="closeHelp">&times;</span>
+            
+            <div class="modal-header">
+                <h2>Graph Animator</h2>
+                <p class="subtitle">Visualizer tool</p>
+            </div>
+
+            <div class="help-section portfolio-highlight">
+                <h3>About</h3>
+                <p>Made by Alex Zheng</p>
+                <p>This tool will animate any math equations for you to visualize. Just enter any math equation, an interval to animate, the animation time and then click animate! I attached a link to my github and source code down below!</p>
+            </div>
+
+            <div class="help-section">
+                <h3>Documentation</h3>
+                
+                <h4>Operators and Syntax</h4>
+                <p>Enter your equation in terms of just <code>x</code> (no other variables). Use parenthesis for order of operations.</p>
+                
+                <h5>Fractions</h5>
+                <p>To animate
+                    <span style="font-style: italic; margin-left: 4px;">y = </span>
+                    <span style="display:inline-block; vertical-align:middle; text-align:center; font-size:0.9em; line-height:1.2; margin: 0 4px; font-style: italic;">
+                        <span style="border-bottom:1px solid #333; display:block; padding: 0 2px;">x + 3</span>
+                        <span>2</span>
+                    </span>, enter in <code>(x+3)/2</code>
+                </p>
+                
+                <h5>Exponents</h5>
+                <p>To animate <i>y = x<sup>2</sup></i>, enter in <code>x^2</code></p>
+                
+                <h5>Multiplication</h5>
+                <p>To animate <i>y = 2x</i>, enter in <code>2*x</code></p>
+                
+                <h5>Multiple equations</h5>
+                <p>To animate multiple equations, separate them with commas. For example: <code>(x+3)/2, x^2, 2*x</code></p>
+
+                <h4>Supported Functions</h4>
+                
+                <h5>Basic</h5>
+                <p><code>abs(x)</code>, <code>sqrt(x)</code>, <code>cbrt(x)</code>, <code>nthRoot(x,n)</code> (nth root of x), <code>x!</code> (factorial)</p>
+                
+                <h5>Logarithms</h5>
+                <p><code>log(x)</code> (natural log), <code>log10(x)</code> (base 10 log), <code>log2(x)</code>(base 2 log)</p>
+                
+                <h5>Basic Trig</h5>
+                <p><code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>sec(x)</code>, <code>csc(x)</code>, <code>cot(x)</code></p>
+                
+                <h5>Inverse Trig</h5>
+                <p><code>asin(x)</code>, <code>acos(x)</code>, <code>atan(x)</code>, <code>asec(x)</code>, <code>acsc(x)</code>, <code>acot(x)</code></p>
+                
+                <h5>Hyperbolic</h5>
+                <p><code>sinh(x)</code>, <code>cosh(x)</code>, <code>tanh(x)</code>, <code>sech(x)</code>, <code>csch(x)</code>, <code>coth(x)</code></p>
+                
+                <h5>Inverse Hyperbolic</h5>
+                <p><code>asinh(x)</code>, <code>acosh(x)</code>, <code>atanh(x)</code>, <code>asech(x)</code>, <code>acsch(x)</code>, <code>acoth(x)</code></p>
+                
+                <h5>Special functions</h5>
+                <p><code>gamma(x)</code></p>
+
+                <h4>Settings</h4>
+                
+                <h5>Interval to animate [x1, x2]</h5>
+                <p>This setting controls where the animation is drawn. The animation will start at x = x1 and animate all the way to x = x2.</p>
+                
+                <h5>X-axis & Y-axis Bounds</h5>
+                <p>This setting controls the maximum and minimum values of x and y shown on the grid.</p>
+                
+                <h5>Grid Spacing</h5>
+                <p>This setting determines the number of units between grid lines.</p>
+                
+                <h5>Animation Time</h5>
+                <p>This is the total time it takes for the animation to start and finish.</p>
+                
+                <h5>Square Grid Checkbox</h5>
+                <p>If this is checked, the grid lines will form perfect squares. This means it will change the Y-axis bounds based on the X-axis bounds.</p>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="graphCanvas"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    <script type="module" src="main.js"></script>
+    
+</body>
+</html>
