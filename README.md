@@ -1,6 +1,6 @@
 <h1 align="center">Hi 👋, I'm Alex Zheng!</h1>
-<h2 align="center">High Schooler from Lambert High School.</h2>
-<p align="center">Have you ever wanted to visualize how math equations can be turned into graphs? Well, this is exactly why I built this tool! This project turns any math equation into cool animations for people to see. It is open on github for anyone interested to see!</p>
+<h2 align="center">High Schooler from Lambert High School</h2>
+<p align="center">Have you ever wanted to visualize how math equations can be turned into graphs? Well, this is exactly why I built this tool! This project turns any math equation into cool animations for people to see. It is open on github for anyone interested.</p>
 
 - 👨‍💻 You can find all of my other projects at: [Portfolio link](Portfolio link)
 
